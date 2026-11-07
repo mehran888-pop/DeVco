@@ -1,0 +1,60 @@
+/*
+Theme Name: DeVco | دیوکو
+Theme URI: https://devco.example
+Author: DeVco Studio
+Author URI: https://devco.example
+Description: قالب حرفه‌ای فروشگاهی وردپرس با پشتیبانی کامل ووکامرس و المنتور؛ شامل المان‌های اختصاصی فروشگاهی، اتاق پرو مجازی، سبد خرید شناور، هدر و فوتر ساز، ناوبری موبایل، ورود پیامکی یکپارچه، پنل کاربری و پنل سفارش دوخت با مانکن سه‌بعدی.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: devco
+Domain Path: /languages
+Tags: e-commerce, rtl-language-support, custom-colors, custom-menu, custom-logo, featured-images, translation-ready, block-styles, wide-blocks
+WC requires at least: 7.0
+WC tested up to: 9.4
+*/
+
+/*
+ * استایل اصلی قالب از فایل assets/css/main.css بارگذاری می‌شود.
+ * این فایل صرفاً برای شناسه قالب و استایل‌های ضروری است.
+ */
+
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background-color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, .6);
+	clip: auto !important;
+	clip-path: none;
+	color: #2271b1;
+	display: block;
+	font-size: .875rem;
+	font-weight: 700;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000;
+}
+
+.skip-link:focus {
+	position: fixed;
+}

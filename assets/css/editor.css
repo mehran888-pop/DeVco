@@ -1,0 +1,101 @@
+/**
+ * DeVco — Elementor editor tweaks (panel + preview).
+ * Enqueued only inside the Elementor editor.
+ */
+
+/* ------------------------------------------------------------------
+ * 1. Editor panel
+ * ------------------------------------------------------------------ */
+.devco-editor-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 9px 11px;
+	border-radius: 8px;
+	background: rgba(200, 169, 106, .12);
+	border: 1px solid rgba(200, 169, 106, .3);
+	font-size: 11px;
+	line-height: 1.8;
+	color: #6b7280;
+	margin-block: 8px 12px;
+	direction: rtl;
+	text-align: right;
+}
+
+.devco-editor-note svg { flex-shrink: 0; color: #a8894c; margin-top: 2px; }
+
+.devco-editor-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border-radius: 99px;
+	background: #111827;
+	color: #c8a96a;
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: .2px;
+}
+
+#elementor-panel .elementor-control .devco-control-heading {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 11px;
+	font-weight: 800;
+	color: #111827;
+	padding-block: 4px;
+}
+
+#elementor-panel .elementor-control .devco-control-heading::before {
+	content: "";
+	width: 3px;
+	height: 12px;
+	border-radius: 2px;
+	background: #c8a96a;
+}
+
+/* Hide our own "required plugin" placeholders inside the panel */
+#elementor-panel .devco-hidden { display: none !important; }
+
+/* ------------------------------------------------------------------
+ * 2. Preview canvas helpers
+ * ------------------------------------------------------------------ */
+.elementor-editor-active .devco-marquee__track { animation-play-state: paused; }
+.elementor-editor-active .devco-carousel__track { transform: none !important; }
+.elementor-editor-active .devco-fab.is-open .devco-fab__item,
+.elementor-editor-active .devco-fab__item { opacity: 1; transform: none; }
+
+/* Make empty dynamic widgets preview-friendly */
+.elementor-editor-active .devco-product-grid:empty::after,
+.elementor-editor-active .devco-cat-grid:empty::after {
+	content: "محصولی برای نمایش نیست";
+	display: grid;
+	place-items: center;
+	min-height: 140px;
+	border: 2px dashed #e5e2dc;
+	border-radius: 12px;
+	color: #9ca3af;
+	font-size: 12px;
+	direction: rtl;
+}
+
+.elementor-editor-active .devco-fitting--inline { pointer-events: none; }
+.elementor-editor-active .devco-bodymap__stage { cursor: default; }
+
+/* Keep sticky elements static inside the editor */
+.elementor-editor-active .devco-shop-sidebar,
+.elementor-editor-active .devco-dash__side,
+.elementor-editor-active .devco-sticky-atc,
+.elementor-editor-active .devco-fc,
+.elementor-editor-active .devco-fab,
+.elementor-editor-active .devco-fit-trigger--float { position: static !important; transform: none !important; }
+
+/* ------------------------------------------------------------------
+ * 3. Elementor default UI polish (RTL)
+ * ------------------------------------------------------------------ */
+#elementor-panel .elementor-panel-heading-title { font-weight: 700; }
+
+#elementor-panel-elements .elementor-element-wrapper .icon i[class^="eicon-"] { color: #a8894c; }
+
+.elementor-panel .elementor-element:hover .icon { color: #c8a96a; }

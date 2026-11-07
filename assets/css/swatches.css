@@ -1,0 +1,181 @@
+/**
+ * DeVco — Variation swatches (color / image / label) + price & stock states.
+ */
+
+/* ------------------------------------------------------------------
+ * 1. Field wrapper
+ * ------------------------------------------------------------------ */
+.devco-swatches-field { display: grid; gap: 7px; margin-bottom: 14px; }
+
+.devco-swatches-field > label,
+.devco-swatches-label {
+	font-size: .8rem;
+	font-weight: 700;
+	color: var(--devco-text, #1f2937);
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+}
+
+.devco-swatches-selected {
+	font-size: .76rem;
+	font-weight: 600;
+	color: var(--devco-muted, #6b7280);
+}
+
+/* ------------------------------------------------------------------
+ * 2. Swatch groups
+ * ------------------------------------------------------------------ */
+.devco-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.devco-swatch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: transform .18s, box-shadow .18s, border-color .18s;
+	border: 1.5px solid var(--devco-border, #e8e6e1);
+	background: #fff;
+	color: var(--devco-text, #1f2937);
+	font-size: .78rem;
+	font-weight: 700;
+	line-height: 1;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.devco-swatch:hover { transform: translateY(-1px); }
+.devco-swatch.is-active { border-color: var(--devco-primary, #111827); box-shadow: 0 0 0 2px rgba(17, 24, 39, .14); }
+.devco-swatch.is-disabled,
+.devco-swatch[disabled] { opacity: .35; pointer-events: none; position: relative; }
+.devco-swatch.is-disabled::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top left, transparent 46%, #9ca3af 47%, #9ca3af 53%, transparent 54%);
+}
+
+/* Color type */
+.devco-swatches--color .devco-swatch {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	padding: 0;
+	border-color: rgba(17, 24, 39, .12);
+}
+
+.devco-swatches--color .devco-swatch.is-active { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--devco-primary, #111827); }
+
+.devco-swatch__color {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
+}
+
+/* Image type */
+.devco-swatches--image .devco-swatch {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	padding: 0;
+	overflow: hidden;
+}
+
+.devco-swatches--image .devco-swatch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Label / button type */
+.devco-swatches--label .devco-swatch {
+	min-width: 42px;
+	height: 34px;
+	padding-inline: 11px;
+	border-radius: 9px;
+}
+
+.devco-swatches--label .devco-swatch.is-active { background: var(--devco-primary, #111827); border-color: var(--devco-primary, #111827); color: #fff; }
+
+/* Pill type */
+.devco-swatches--pill .devco-swatch {
+	height: 34px;
+	padding-inline: 14px;
+	border-radius: 99px;
+}
+
+.devco-swatches--pill .devco-swatch.is-active { background: var(--devco-accent, #c8a96a); border-color: var(--devco-accent, #c8a96a); color: #14110c; }
+
+/* Square (large) type */
+.devco-swatches--square .devco-swatch {
+	min-width: 44px;
+	height: 40px;
+	padding-inline: 13px;
+	border-radius: 5px;
+}
+
+.devco-swatches--square .devco-swatch.is-active { border-color: var(--devco-primary, #111827); background: #f6f4f0; }
+
+/* Tooltip */
+.devco-swatch__tip {
+	position: absolute;
+	bottom: calc(100% + 7px);
+	inset-inline-start: 50%;
+	transform: translateX(-50%) translateY(4px);
+	padding: 4px 8px;
+	border-radius: 6px;
+	background: #111827;
+	color: #fff;
+	font-size: .66rem;
+	font-weight: 600;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	transition: all .18s;
+	z-index: 5;
+}
+
+.devco-swatch:hover .devco-swatch__tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Native variation dropdown fallback */
+.woocommerce div.product form.cart .variations { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+.woocommerce div.product form.cart .variations th,
+.woocommerce div.product form.cart .variations td { padding: 7px 0; text-align: start; border: 0; background: transparent; }
+.woocommerce div.product form.cart .variations label { font-size: .8rem; font-weight: 700; }
+.woocommerce div.product form.cart .variations select { max-width: 100%; padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--devco-border, #e8e6e1); font-size: .84rem; }
+
+.woocommerce div.product .woocommerce-variation-price .price { font-size: 1.15rem; font-weight: 800; }
+.woocommerce div.product .woocommerce-variation-availability .stock { font-size: .78rem; }
+.woocommerce div.product .woocommerce-variation-availability .out-of-stock { color: var(--devco-danger, #e11d48); }
+.woocommerce div.product .woocommerce-variation-availability .in-stock { color: #047857; }
+
+.reset_variations { font-size: .74rem; color: var(--devco-muted, #6b7280); }
+.reset_variations:hover { color: var(--devco-primary, #111827); }
+
+/* ------------------------------------------------------------------
+ * 3. Stock / badge helpers on cards
+ * ------------------------------------------------------------------ */
+.devco-stock {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	font-size: .72rem;
+	font-weight: 700;
+	color: #047857;
+}
+
+.devco-stock::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.devco-stock--low { color: #b45309; }
+.devco-stock--out { color: var(--devco-danger, #e11d48); }
+
+.devco-product-card__swatches { display: flex; gap: 4px; margin-top: 5px; }
+.devco-product-card__swatches span { width: 13px; height: 13px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); }
+
+@media (max-width: 640px) {
+	.devco-swatches--color .devco-swatch { width: 28px; height: 28px; }
+	.devco-swatches--image .devco-swatch { width: 34px; height: 34px; }
+	.devco-swatches--label .devco-swatch { min-width: 36px; height: 31px; padding-inline: 9px; }
+}
