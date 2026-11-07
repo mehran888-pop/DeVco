@@ -295,6 +295,22 @@
 			return;
 		}
 
+		// Drawer opened directly on the categories section (bottom nav).
+		if (target.closest('.js-devco-drawer-categories')) {
+			event.preventDefault();
+			openDrawer();
+
+			var drawer = Devco.select('[data-drawer]');
+			var section = drawer ? drawer.querySelector('.devco-drawer__section') : null;
+
+			if (section) {
+				setTimeout(function () {
+					section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}, 340);
+			}
+			return;
+		}
+
 		if (target.closest('[data-drawer-close]')) {
 			closeOverlay(target.closest('[data-drawer]'));
 			return;
