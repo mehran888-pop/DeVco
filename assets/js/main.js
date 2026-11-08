@@ -926,6 +926,7 @@
 		var header = Devco.select('[data-header]');
 		var progress = Devco.select('[data-scroll-progress]');
 		var toTop = Devco.select('.js-devco-to-top');
+		var bottomNav = Devco.select('[data-bottom-nav]');
 		var lastY = window.pageYOffset;
 		var ticking = false;
 
@@ -948,6 +949,11 @@
 				if (mobileHide && window.innerWidth <= 991) {
 					hide.classList.toggle('is-hidden', y > lastY && y > 140);
 				}
+			}
+
+			// Mobile bottom bar auto-hide.
+			if (bottomNav && bottomNav.classList.contains('is-hide-on-scroll')) {
+				bottomNav.classList.toggle('is-hidden', y > lastY && y > 160);
 			}
 
 			// Scroll progress.

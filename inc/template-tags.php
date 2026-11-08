@@ -626,12 +626,37 @@ function devco_bottom_nav() {
 		);
 	}
 
-	$style       = devco_opt( 'mobile.style', 'glass' );
-	$center      = devco_opt_bool( 'mobile.center_item', true );
-	$middle      = (int) floor( count( $items ) / 2 );
-	$cart_count  = devco_cart_count();
+	$style      = devco_opt( 'mobile.style', 'glass' );
+	$center     = devco_opt_bool( 'mobile.center_item', true );
+	$cart_count = devco_cart_count();
 
-	echo '<nav class="devco-bottom-nav devco-bottom-nav--' . esc_attr( $style ) . '" aria-label="ناوبری موبایل" data-bottom-nav>';
+	// Keep «خانه» in the middle so the raised button always shortcuts to the home page.
+	if ( $center && count( $items ) > 2 ) {
+		foreach ( $items as $item_key => $item_data ) {
+			if ( isset( $item_data['action'] ) && 'home' === $item_data['action'] ) {
+				$home_item = $item_data;
+				unset( $items[ $item_key ] );
+				$items = array_values( $items );
+				array_splice( $items, (int) floor( count( $items ) / 2 ), 0, array( $home_item ) );
+				break;
+			}
+		}
+	}
+
+	$items  = array_values( $items );
+	$middle = (int) floor( count( $items ) / 2 );
+
+	$nav_classes = array( 'devco-bottom-nav', 'devco-bottom-nav--' . $style );
+
+	if ( $center ) {
+		$nav_classes[] = 'is-center';
+	}
+
+	if ( devco_opt_bool( 'mobile.hide_on_scroll', false ) ) {
+		$nav_classes[] = 'is-hide-on-scroll';
+	}
+
+	echo '<nav class="' . esc_attr( implode( ' ', $nav_classes ) ) . '" aria-label="ناوبری موبایل" data-bottom-nav>';
 
 	foreach ( $items as $index => $item ) {
 		$action = isset( $item['action'] ) ? $item['action'] : 'home';
@@ -682,7 +707,7 @@ function devco_bottom_nav() {
 
 		$classes = array( 'devco-bottom-nav__item' );
 
-		if ( $center && $index === $middle && count( $items ) % 2 ) {
+		if ( $center && $index === $middle ) {
 			$classes[] = 'is-center';
 		}
 

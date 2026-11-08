@@ -226,7 +226,7 @@ function devco_dynamic_css() {
 
 	// Bottom bar offset for content.
 	if ( devco_opt_bool( 'mobile.bottom_bar', true ) ) {
-		$css .= '@media (max-width:991px){body.devco-has-bottom-bar{padding-bottom:78px;}}';
+		$css .= '@media (max-width:991px){body.devco-has-bottom-bar{padding-bottom:96px;}}';
 	}
 
 	// Custom CSS from options.

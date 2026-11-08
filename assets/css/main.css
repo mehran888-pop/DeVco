@@ -1406,7 +1406,6 @@ select.devco-input {
 	position: fixed;
 	inset-inline: 0;
 	bottom: 0;
-	display: flex;
 	background: #fff;
 	border-top: 1px solid rgba(17, 24, 39, .08);
 	padding: 4px 6px calc(4px + env(safe-area-inset-bottom));
@@ -1418,7 +1417,6 @@ select.devco-input {
 	position: fixed;
 	inset-inline: 10px;
 	bottom: calc(10px + env(safe-area-inset-bottom));
-	display: flex;
 	background: rgba(255, 255, 255, .86);
 	backdrop-filter: blur(16px);
 	border: 1px solid rgba(255, 255, 255, .6);
@@ -1432,7 +1430,6 @@ select.devco-input {
 	position: fixed;
 	inset-inline: 22px;
 	bottom: calc(14px + env(safe-area-inset-bottom));
-	display: flex;
 	background: var(--devco-primary, #111827);
 	color: #e5e7eb;
 	border-radius: 999px;
@@ -1443,7 +1440,7 @@ select.devco-input {
 
 .devco-bottom-nav--floating .devco-bottom-nav__item { color: #cbd5e1; }
 .devco-bottom-nav--floating .devco-bottom-nav__item.is-active { color: #fff; }
-.devco-bottom-nav--floating .devco-bottom-nav__item.is-active::before {
+.devco-bottom-nav--floating .devco-bottom-nav__item.is-active:not(.is-center)::before {
 	content: "";
 	position: absolute;
 	inset-inline: 30%;
@@ -1457,18 +1454,20 @@ select.devco-input {
 	position: fixed;
 	inset-inline: 0;
 	bottom: 0;
-	display: flex;
 	background: #fff;
 	padding: 4px 4px calc(6px + env(safe-area-inset-bottom));
 	z-index: 450;
 	border-top: 1px solid rgba(17, 24, 39, .06);
 }
 
+.devco-bottom-nav--glass.is-center,
+.devco-bottom-nav--pill.is-center,
+.devco-bottom-nav--floating.is-center { overflow: visible; }
+
 .devco-bottom-nav--pill {
 	position: fixed;
 	inset-inline: 14px;
 	bottom: calc(12px + env(safe-area-inset-bottom));
-	display: flex;
 	background: #fff;
 	border: 1.5px solid var(--devco-border, #e8e6e1);
 	border-radius: 999px;
@@ -1484,23 +1483,77 @@ select.devco-input {
 	color: #fff;
 }
 
-.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__icon {
-	position: absolute;
-	top: -20px;
-	width: 46px;
-	height: 46px;
-	border-radius: 50%;
-	background: var(--devco-primary, #111827);
-	color: #fff;
-	display: grid;
-	place-items: center;
-	box-shadow: 0 12px 24px -12px rgba(17, 24, 39, .8);
-}
+/* Icons always visible inside the bar. */
+.devco-bottom-nav__icon svg { display: block; width: 22px; height: 22px; }
 
-.devco-bottom-nav.is-center,
+/* Raised centre button (defaults to «خانه»). */
+.devco-bottom-nav.is-center { position: relative; overflow: visible; align-items: flex-end; }
+
 .devco-bottom-nav__item.is-center { position: relative; }
 
-.devco-bottom-nav__item.is-center .devco-bottom-nav__label { margin-top: 26px; }
+/* Reserve room for the raised button so the centre label lines up with the others. */
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center {
+	padding-top: 30px;
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__icon {
+	position: absolute;
+	top: -22px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	background: linear-gradient(150deg, var(--devco-primary, #111827), #000);
+	color: #fff;
+	border: 3px solid var(--devco-surface, #fff);
+	box-shadow: 0 0 0 2px rgba(200, 169, 106, .45), 0 16px 30px -14px rgba(17, 24, 39, .75);
+	transition: transform .2s, box-shadow .2s;
+	z-index: 2;
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__icon svg {
+	width: 24px;
+	height: 24px;
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center:hover .devco-bottom-nav__icon {
+	transform: translateX(-50%) translateY(-2px);
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center.is-active .devco-bottom-nav__icon {
+	box-shadow: 0 0 0 3px var(--devco-accent, #c8a96a), 0 16px 30px -12px rgba(17, 24, 39, .8);
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__label {
+	font-size: .7rem;
+	font-weight: 800;
+	color: var(--devco-primary, #111827);
+	letter-spacing: -.1px;
+}
+
+.devco-bottom-nav.is-center .devco-bottom-nav__item.is-center.is-active .devco-bottom-nav__label {
+	color: var(--devco-accent-dark, #a8894c);
+}
+
+/* Floating (dark) bar: the raised button inverts to gold. */
+.devco-bottom-nav--floating.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__icon {
+	background: linear-gradient(150deg, var(--devco-accent, #c8a96a), var(--devco-accent-dark, #a8894c));
+	color: #111827;
+	border-color: #111827;
+	box-shadow: 0 16px 30px -14px rgba(0, 0, 0, .8);
+}
+
+.devco-bottom-nav--floating.is-center .devco-bottom-nav__item.is-center .devco-bottom-nav__label {
+	color: #fff;
+}
+
+/* Bottom padding leaves room for the taller centred bar. */
+@media (max-width: 991px) {
+	body.devco-has-bottom-bar { padding-bottom: 96px; }
+}
 
 .devco-bottom-nav.is-hide-on-scroll.is-hidden { transform: translateY(120%); }
 .devco-bottom-nav { transition: transform .3s ease; }
@@ -2032,6 +2085,14 @@ body.devco-dark {
 @media (max-width: 1199px) {
 	.devco-header__slot--center .devco-nav--center .devco-menu { gap: 8px; }
 	.devco-footer__grid { grid-template-columns: 1.2fr repeat(2, 1fr); }
+}
+
+@media (min-width: 992px) {
+	.devco-bottom-nav,
+	.devco-drawer,
+	.devco-mobile-header { display: none !important; }
+
+	body.devco-has-bottom-bar { padding-bottom: 0 !important; }
 }
 
 @media (max-width: 991px) {
