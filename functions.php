@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DEVCO_VERSION', '1.1.1' );
+define( 'DEVCO_VERSION', '1.2.0' );
 define( 'DEVCO_DIR', get_template_directory() );
 define( 'DEVCO_URI', get_template_directory_uri() );
 define( 'DEVCO_OPTION', 'devco_options' );
@@ -43,6 +43,11 @@ require_once DEVCO_DIR . '/inc/template-tags.php';
  * Creative front page sections (hero, demo products, editorial blocks).
  */
 require_once DEVCO_DIR . '/inc/home.php';
+
+/**
+ * Content page blocks: page hero, about us, contact us (form + details).
+ */
+require_once DEVCO_DIR . '/inc/pages.php';
 
 /**
  * Global floating UI (cart, contact, socials, login modal) and fitting room.

@@ -101,9 +101,9 @@ class DeVco_Demo_Import {
 	 */
 	protected static function import_pages() {
 		$pages = array(
-			'home'      => array( 'title' => 'صفحه اصلی', 'slug' => 'home' ),
-			'about'     => array( 'title' => 'درباره ما', 'slug' => 'about' ),
-			'contact'   => array( 'title' => 'تماس با ما', 'slug' => 'contact' ),
+			'home'      => array( 'title' => 'صفحه اصلی', 'slug' => 'home', 'template' => 'templates/home.php' ),
+			'about'     => array( 'title' => 'درباره ما', 'slug' => 'about', 'template' => 'templates/about.php' ),
+			'contact'   => array( 'title' => 'تماس با ما', 'slug' => 'contact', 'template' => 'templates/contact.php' ),
 			'terms'     => array( 'title' => 'قوانین و مقررات', 'slug' => 'terms' ),
 			'faq'       => array( 'title' => 'سوالات متداول', 'slug' => 'faq' ),
 			'dashboard' => array( 'title' => 'حساب کاربری', 'slug' => 'my-dashboard', 'template' => 'templates/dashboard.php' ),
@@ -153,7 +153,7 @@ class DeVco_Demo_Import {
 		update_option( DEVCO_OPTION, $options );
 
 		return array(
-			'message' => 'صفحات ساخته شد: صفحه اصلی، فروشگاه، درباره ما، تماس، قوانین، داشبورد، سفارش دوخت و پیگیری سفارش.',
+			'message' => 'صفحات ساخته شد: صفحه اصلی (قالب خلاق)، درباره ما و تماس با ما با قالب آماده، فروشگاه، قوانین، داشبورد، سفارش دوخت و پیگیری سفارش.',
 		);
 	}
 
@@ -570,14 +570,14 @@ class DeVco_Demo_Import {
 		}
 
 		$products = array(
-			array( 'مانتو کرپ مدل آوا', 2450000, 1980000 ),
-			array( 'شومیز ابریشمی مدل نیلا', 1290000, 0 ),
-			array( 'کت و شلوار مدل راوی', 4890000, 4290000 ),
-			array( 'پیراهن مجلسی مدل درسا', 3690000, 0 ),
-			array( 'پالتو کتان مدل باران', 5290000, 4690000 ),
-			array( 'بلوز ساتن مدل روشا', 980000, 0 ),
-			array( 'دامن پلیسه مدل سایه', 1450000, 0 ),
-			array( 'شلوار پارچه‌ای مدل ماهان', 1690000, 1390000 ),
+			array( 'مانتو کرپ مدل آوا', 2450000, 1980000, 0, 'coat', 'کرپ کشسان با دوخت اختصاصی؛ قد ۱۱۵ سانت.\n\nدوخت: کارگاه دیوکو\nجنس: کرپ کشسان\nنگهداری: شست‌وشوی دستی با آب سرد', 1 ),
+			array( 'شومیز ابریشمی مدل نیلا', 1290000, 0, 1, 'blouse', 'ابریشم‌مخلوط مات با یقه گرد؛ مناسب محیط کار و مهمانی.\n\nجنس: ابریشم مخلوط\nیقه: گرد\nآستین: بلند', 1 ),
+			array( 'کت و شلوار مدل راوی', 4890000, 4290000, 2, 'suit', 'ست دو تکه با پارچه پشمی سبک؛ کت تک‌دکمه و شلوار راسته.\n\nجنس: پشم مخلوط\nآستر: ویسکوز\nمناسب: مجلسی و اداری', 0 ),
+			array( 'پیراهن مجلسی مدل درسا', 3690000, 0, 3, 'dress', 'قد بلند با کمر جمع‌شده و دامن کلوش؛ همراه با آستر داخلی.\n\nجنس: ساتن مات\nقد: ۱۴۰ سانت\nآستر: دارد', 0 ),
+			array( 'پالتو کتان مدل باران', 5290000, 4690000, 0, 'coat', 'کتان ضخیم با کمربند پارچه‌ای؛ چهار جیب و آستر کامل.\n\nجنس: کتان ضخیم\nآستر: پنبه\nقد: ۱۲۰ سانت', 0 ),
+			array( 'بلوز ساتن مدل روشا', 980000, 0, 1, 'blouse', 'ساتن سبک با یقه پروانه‌ای؛ دوخت تمیز و دکمه‌های مخفی.\n\nجنس: ساتن\nیقه: پروانه‌ای\nآستین: بلند', 0 ),
+			array( 'دامن پلیسه مدل سایه', 1450000, 0, 3, 'skirt', 'پلیسه ریز با کمر کشی لیقه‌ای؛ قد ۸۰ سانت.\n\nجنس: پلی‌استر کرپ\nکمر: کشی لیقه‌ای', 0 ),
+			array( 'شلوار پارچه‌ای مدل ماهان', 1690000, 1390000, 2, 'trousers', 'شلوار راسته با کمر بلند و چند جیب؛ پارچه‌ی خوش‌افت.\n\nجنس: کرپ پشم\nفیت: راسته\nکمر: بلند', 0 ),
 		);
 
 		$created = 0;
@@ -594,19 +594,40 @@ class DeVco_Demo_Import {
 
 			$product->set_stock_status( 'instock' );
 			$product->set_short_description( 'دوخت اختصاصی دیوکو با پارچه ممتاز و امکان سفارشی‌سازی اندازه.' );
-			$product->set_description( '<p>این محصول با دقت در کارگاه دیوکو تولید می‌شود. امکان ثبت اندازه اختصاصی و انتخاب پارچه دلخواه وجود دارد.</p>' );
+			$product->set_description( '<p>' . nl2br( esc_html( $data[5] ) ) . '</p><p>این محصول در کارگاه دیوکو و به سفارش شما دوخته می‌شود؛ امکان ثبت اندازه اختصاصی و انتخاب پارچه دلخواه وجود دارد.</p>' );
+
+			// Size attribute so the demo shop shows the real size chips.
+			$attribute = new WC_Product_Attribute();
+			$attribute->set_id( 0 );
+			$attribute->set_name( 'سایز' );
+			$attribute->set_options( array( 'S', 'M', 'L', 'XL' ) );
+			$attribute->set_position( 0 );
+			$attribute->set_visible( true );
+			$attribute->set_variation( false );
+			$product->set_attributes( array( $attribute ) );
+
+			$product->set_featured( (bool) $data[6] );
 
 			$id = $product->save();
 
 			if ( $id && $cat_ids ) {
-				wp_set_object_terms( $id, array( $cat_ids[ $index % count( $cat_ids ) ] ), 'product_cat' );
+				wp_set_object_terms( $id, array( $cat_ids[ $data[3] % count( $cat_ids ) ] ), 'product_cat' );
 			}
 
-			// Attach a generated placeholder image.
-			$image_id = self::placeholder_image( 'محصول نمونه ' . ( $index + 1 ), $index );
+			if ( $id ) {
+				wp_set_object_terms( $id, array( 'کالکشن دیوکو', 'دوخت اختصاصی' ), 'product_tag' );
 
-			if ( $image_id && $id ) {
-				set_post_thumbnail( $id, $image_id );
+				// Cover image + one gallery shot.
+				$image_id   = self::placeholder_image( $data[0], $index, $data[4] );
+				$gallery_id = self::placeholder_image( $data[0] . ' - جزئیات', $index + 1, $data[4] );
+
+				if ( $image_id ) {
+					set_post_thumbnail( $id, $image_id );
+				}
+
+				if ( $gallery_id ) {
+					update_post_meta( $id, '_product_image_gallery', (string) $gallery_id );
+				}
 			}
 
 			$created++;
@@ -662,6 +683,15 @@ class DeVco_Demo_Import {
 			'dashboard.style'            => 'light',
 			'tailoring.enabled'          => 1,
 			'tailoring.body_3d'          => 1,
+			'general.phone'              => '021-91002233',
+			'general.email'              => 'hello@devco.example',
+			'general.address'            => 'تهران، خیابان ولیعصر، کوچه بهار، پلاک ۱۲',
+			'general.working_hours'      => 'شنبه تا پنجشنبه ۹ تا ۱۸',
+			'general.about_text'         => 'دیوکو؛ پوشاک دوخت سفارشی با پارچه‌های ممتاز و اندازه‌های دقیق.',
+			'floating.cart_size'         => 58,
+			'social.instagram'           => 'https://instagram.com/devco',
+			'social.telegram'            => 'https://t.me/devco',
+			'social.whatsapp'            => 'https://wa.me/989120000000',
 		);
 
 		foreach ( $defaults as $key => $value ) {
@@ -684,21 +714,34 @@ class DeVco_Demo_Import {
 	 * @param int    $seed  Seed.
 	 * @return int
 	 */
-	protected static function placeholder_image( $title, $seed = 0 ) {
+	protected static function placeholder_image( $title, $seed = 0, $shape = 'coat' ) {
 		$palettes = array(
-			array( '#efe7dc', '#c8a96a' ),
-			array( '#e7e3f5', '#8b7cf6' ),
-			array( '#e2efe9', '#34d399' ),
-			array( '#fde8e8', '#f87171' ),
-			array( '#e0ecf8', '#60a5fa' ),
-			array( '#f5ead8', '#d4a373' ),
+			array( '#efe7dc', '#e3d6c2', '#a8894c' ),
+			array( '#eceaf3', '#ded9ec', '#6b5fa8' ),
+			array( '#e6efe9', '#d5e6dc', '#2f7d5d' ),
+			array( '#f6ead9', '#efdcc4', '#b07d3c' ),
+			array( '#e8eef4', '#d8e3ee', '#3d6a94' ),
+			array( '#f3e7e4', '#ecd8d3', '#a95c4b' ),
+		);
+
+		$shapes = array(
+			'coat'     => '<path d="M222 150 168 182 146 300l46 20v300h216V320l46-20-22-118-54-32-46 26h-64z"/><path d="M160 470h282"/><path d="M300 194v446"/>',
+			'blouse'   => '<path d="M250 152 176 196l20 120 42-16v280h124V300l42 16 20-120-74-44-25 22h-50z"/><path d="M258 178c18 22 66 22 84 0"/>',
+			'dress'    => '<path d="M258 150 214 188l34 96-46 336h196l-46-336 34-96-44-38-28 20h-28z"/><path d="M232 420h136"/>',
+			'skirt'    => '<path d="M232 230h136l52 390H180z"/><path d="M262 236l-14 380M300 236v380M338 236l14 380"/>',
+			'trousers' => '<path d="M242 190h116l16 430h-72l-2-230-2 230h-72z"/><path d="M242 236h116"/>',
+			'suit'     => '<path d="M222 150 168 182 146 300l46 20v210h216V320l46-20-22-118-54-32-46 26h-64z"/><path d="M300 194l-42 86 42 42 42-42z"/><path d="M146 640h108l10-160H160zM346 480h108v160H336z" opacity="0.8"/>',
 		);
 
 		$palette = $palettes[ $seed % count( $palettes ) ];
-		$svg     = sprintf(
-			'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750"><rect width="600" height="750" fill="%1$s"/><circle cx="300" cy="280" r="120" fill="none" stroke="%2$s" stroke-width="6" opacity="0.55"/><path d="M180 700c0-140 54-240 120-240s120 100 120 240" fill="none" stroke="%2$s" stroke-width="8" opacity="0.7"/><text x="300" y="620" text-anchor="middle" font-family="sans-serif" font-size="30" fill="%2$s">DeVco</text></svg>',
+		$shape   = isset( $shapes[ $shape ] ) ? $shape : 'coat';
+
+		$svg = sprintf(
+			'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%1$s"/><stop offset="1" stop-color="%2$s"/></linearGradient></defs><rect width="600" height="750" fill="url(#bg)"/><ellipse cx="300" cy="672" rx="150" ry="18" fill="%3$s" opacity="0.12"/><g fill="none" stroke="%3$s" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.62">%4$s</g><text x="300" y="712" text-anchor="middle" font-family="sans-serif" font-size="22" letter-spacing="4" fill="%3$s" opacity="0.75">DEVCO</text></svg>',
 			$palette[0],
-			$palette[1]
+			$palette[1],
+			$palette[2],
+			$shapes[ $shape ]
 		);
 
 		$upload = wp_upload_bits( 'devco-demo-' . $seed . '-' . time() . '.svg', null, $svg );

@@ -159,6 +159,14 @@ return array(
 						'default'     => '',
 					),
 					array(
+						'id'          => 'general.email',
+						'type'        => 'text',
+						'title'       => 'ایمیل تماس',
+						'description' => 'پیام‌های فرم «تماس با ما» به این ایمیل ارسال می‌شود. خالی = ایمیل مدیر سایت.',
+						'placeholder' => 'hello@example.com',
+						'default'     => '',
+					),
+					array(
 						'id'      => 'general.address',
 						'type'    => 'textarea',
 						'title'   => 'آدرس',
@@ -169,6 +177,14 @@ return array(
 						'type'    => 'text',
 						'title'   => 'ساعات کاری',
 						'default' => 'شنبه تا پنجشنبه ۹ الی ۱۸',
+					),
+					array(
+						'id'          => 'general.map_embed',
+						'type'        => 'text',
+						'title'       => 'نشانی نقشه',
+						'description' => 'آدرس embed نقشه (مثلاً لینک Google Maps یا نشان). خالی = نقشه طرح‌واره‌ی تم نمایش داده می‌شود.',
+						'placeholder' => 'https://maps.google.com/maps?q=...&output=embed',
+						'default'     => '',
 					),
 					array(
 						'id'      => 'general.about_text',

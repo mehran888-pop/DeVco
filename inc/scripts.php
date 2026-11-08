@@ -28,6 +28,11 @@ function devco_enqueue_assets() {
 		wp_enqueue_style( 'devco-tailoring', devco_asset( 'css/tailoring.css' ), array( 'devco-main' ), devco_asset_ver( 'css/tailoring.css' ) );
 	}
 
+	// Content pages: about us / contact us (page hero, timeline, form, FAQ).
+	if ( is_page_template( array( 'templates/about.php', 'templates/contact.php' ) ) ) {
+		wp_enqueue_style( 'devco-pages', devco_asset( 'css/pages.css' ), array( 'devco-main' ), devco_asset_ver( 'css/pages.css' ) );
+	}
+
 	if ( devco_is_woo() ) {
 		wp_enqueue_style( 'devco-woo', devco_asset( 'css/woo.css' ), array( 'devco-main' ), devco_asset_ver( 'css/woo.css' ) );
 	}
