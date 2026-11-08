@@ -90,16 +90,19 @@
 	width: 46px;
 	height: 46px;
 	border-radius: 14px;
-	background: rgba(200, 169, 106, .16);
-	border: 1px solid rgba(200, 169, 106, .35);
-	color: #e6cf9a;
-	font-size: .82rem;
+	background: linear-gradient(150deg, rgba(200, 169, 106, .28), rgba(200, 169, 106, .1));
+	border: 1px solid rgba(200, 169, 106, .4);
+	color: #f0d9a8;
+	font-size: 1.2rem;
 	font-weight: 800;
-	letter-spacing: .3px;
+	line-height: 1;
+	font-family: Georgia, "Times New Roman", serif;
 }
 
-.devco-admin-sub { font-size: .8rem; color: rgba(245, 242, 236, .62); }
-.devco-admin-sub::before { content: "دیوکو"; display: block; font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.devco-admin-titles { display: grid; gap: 2px; }
+.devco-admin-title { font-size: .98rem; font-weight: 800; color: #fff; line-height: 1.5; letter-spacing: .2px; }
+.devco-admin-title span { color: rgba(200, 169, 106, .8); font-weight: 400; margin: 0 2px; }
+.devco-admin-sub { font-size: .76rem; color: rgba(245, 242, 236, .6); }
 
 .devco-admin-links { display: flex; gap: 8px; flex-wrap: wrap; position: relative; z-index: 2; }
 
@@ -314,13 +317,15 @@
 }
 
 .devco-section-body {
-	display: none;
+	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 14px 18px;
 	padding: 16px;
 }
 
-.devco-section.is-open .devco-section-body { display: grid; }
+/* Collapsing only kicks in once admin.js is running (no-JS fallback stays readable). */
+.devco-admin-wrap.is-enhanced .devco-section:not(.is-open) .devco-section-body { display: none; }
+.devco-admin-wrap.is-enhanced .devco-section:not(.is-open) .devco-section-head { border-bottom-color: transparent; }
 
 /* Field */
 .devco-field { min-width: 0; display: grid; gap: 6px; align-content: start; }

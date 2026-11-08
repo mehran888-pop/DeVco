@@ -251,8 +251,11 @@ class DeVco_Options {
 		<div class="wrap devco-admin-wrap" dir="rtl">
 			<header class="devco-admin-header">
 				<div class="devco-admin-brand">
-					<span class="devco-admin-logo">دیوکو</span>
-					<span class="devco-admin-sub">تنظیمات قالب فروشگاهی</span>
+					<span class="devco-admin-logo">D</span>
+					<span class="devco-admin-titles">
+						<strong class="devco-admin-title">دیوکو <span>|</span> DeVco</strong>
+						<span class="devco-admin-sub">تنظیمات قالب فروشگاهی</span>
+					</span>
 				</div>
 				<nav class="devco-admin-links">
 					<a href="<?php echo esc_url( admin_url( 'admin.php?page=devco-wizard' ) ); ?>">ویزارد راه‌اندازی</a>
@@ -269,7 +272,8 @@ class DeVco_Options {
 				<aside class="devco-settings-nav">
 					<?php foreach ( $schema as $tab_key => $tab ) : ?>
 						<a class="devco-settings-nav-item <?php echo $active === $tab_key ? 'is-active' : ''; ?>"
-							href="<?php echo esc_url( add_query_arg( array( 'page' => 'devco-settings', 'tab' => $tab_key ), admin_url( 'admin.php' ) ) ); ?>">
+							href="<?php echo esc_url( add_query_arg( array( 'page' => 'devco-settings', 'tab' => $tab_key ), admin_url( 'admin.php' ) ) ); ?>"
+							<?php echo $active === $tab_key ? 'aria-current="page"' : ''; ?>>
 							<span class="devco-nav-icon"><?php devco_icon_e( isset( $tab['icon'] ) ? $tab['icon'] : 'settings' ); ?></span>
 							<span class="devco-nav-label"><?php echo esc_html( $tab['title'] ); ?></span>
 						</a>

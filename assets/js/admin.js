@@ -193,6 +193,9 @@
 			});
 		});
 
+		/* Enable collapsible sections only now that JS is running. */
+		wrap.classList.add('is-enhanced');
+
 		/* Range ↔ number sync. */
 		all('.js-devco-range', wrap).forEach(function (range) {
 			var target = document.getElementById(range.getAttribute('data-target'));
