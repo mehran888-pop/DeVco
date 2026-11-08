@@ -2087,12 +2087,25 @@ body.devco-dark {
 	.devco-footer__grid { grid-template-columns: 1.2fr repeat(2, 1fr); }
 }
 
+/* Mobile-only chrome must never render on desktop, whatever state classes JS adds. */
 @media (min-width: 992px) {
+	.mobile-only,
+	[data-mobile-header],
+	[data-bottom-nav],
+	[data-drawer],
+	[data-mobile-search],
+	.devco-mobile-header,
+	.devco-mobile-search,
 	.devco-bottom-nav,
-	.devco-drawer,
-	.devco-mobile-header { display: none !important; }
+	.devco-drawer {
+		display: none !important;
+		visibility: hidden !important;
+		pointer-events: none !important;
+	}
 
 	body.devco-has-bottom-bar { padding-bottom: 0 !important; }
+	body.devco-no-scroll,
+	body.devco-locked { overflow: auto !important; }
 }
 
 @media (max-width: 991px) {

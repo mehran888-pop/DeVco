@@ -186,14 +186,14 @@ class DeVco_Options {
 			'devco-admin',
 			devco_asset( 'css/admin.css' ),
 			array( 'wp-color-picker' ),
-			DEVCO_VERSION
+			devco_asset_ver( 'css/admin.css' )
 		);
 
 		wp_enqueue_script(
 			'devco-admin',
 			devco_asset( 'js/admin.js' ),
 			array( 'jquery', 'wp-color-picker', 'jquery-ui-sortable' ),
-			DEVCO_VERSION,
+			devco_asset_ver( 'js/admin.js' ),
 			true
 		);
 
@@ -202,7 +202,7 @@ class DeVco_Options {
 				'devco-wizard',
 				devco_asset( 'js/wizard.js' ),
 				array( 'devco-admin' ),
-				DEVCO_VERSION,
+				devco_asset_ver( 'js/wizard.js' ),
 				true
 			);
 		}

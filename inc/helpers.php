@@ -581,6 +581,26 @@ function devco_asset( $path ) {
 }
 
 /**
+ * Cache-busting version string for a theme asset.
+ *
+ * Uses the file modification time so browsers and page caches always pick up
+ * edited CSS/JS, even when DEVCO_VERSION has not changed.
+ *
+ * @param string $path Asset path relative to /assets.
+ * @return string
+ */
+function devco_asset_ver( $path ) {
+	$version = defined( 'DEVCO_VERSION' ) ? DEVCO_VERSION : '1.0.0';
+	$file    = DEVCO_DIR . '/assets/' . ltrim( $path, '/' );
+
+	if ( $file && file_exists( $file ) ) {
+		$version .= '.' . filemtime( $file );
+	}
+
+	return $version;
+}
+
+/**
  * Admin notice helper (used by wizard / requirements).
  *
  * @param string $message Message.

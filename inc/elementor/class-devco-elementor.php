@@ -153,20 +153,20 @@ class DeVco_Elementor {
 	 * Register handles used by widgets so Elementor can load them on demand.
 	 */
 	public function register_frontend_assets() {
-		wp_register_style( 'devco-widgets', devco_asset( 'css/widgets.css' ), array(), DEVCO_VERSION );
-		wp_register_style( 'devco-fitting', devco_asset( 'css/fitting.css' ), array(), DEVCO_VERSION );
-		wp_register_style( 'devco-floating', devco_asset( 'css/floating.css' ), array(), DEVCO_VERSION );
-		wp_register_style( 'devco-auth', devco_asset( 'css/auth.css' ), array(), DEVCO_VERSION );
-		wp_register_script( 'devco-fitting', devco_asset( 'js/fitting.js' ), array(), DEVCO_VERSION, true );
-		wp_register_script( 'devco-floating', devco_asset( 'js/floating.js' ), array(), DEVCO_VERSION, true );
-		wp_register_script( 'devco-auth', devco_asset( 'js/auth.js' ), array(), DEVCO_VERSION, true );
+		wp_register_style( 'devco-widgets', devco_asset( 'css/widgets.css' ), array(), devco_asset_ver( 'css/widgets.css' ) );
+		wp_register_style( 'devco-fitting', devco_asset( 'css/fitting.css' ), array(), devco_asset_ver( 'css/fitting.css' ) );
+		wp_register_style( 'devco-floating', devco_asset( 'css/floating.css' ), array(), devco_asset_ver( 'css/floating.css' ) );
+		wp_register_style( 'devco-auth', devco_asset( 'css/auth.css' ), array(), devco_asset_ver( 'css/auth.css' ) );
+		wp_register_script( 'devco-fitting', devco_asset( 'js/fitting.js' ), array(), devco_asset_ver( 'js/fitting.js' ), true );
+		wp_register_script( 'devco-floating', devco_asset( 'js/floating.js' ), array(), devco_asset_ver( 'js/floating.js' ), true );
+		wp_register_script( 'devco-auth', devco_asset( 'js/auth.js' ), array(), devco_asset_ver( 'js/auth.js' ), true );
 	}
 
 	/**
 	 * Elementor editor tweaks.
 	 */
 	public function editor_assets() {
-		wp_enqueue_style( 'devco-editor', devco_asset( 'css/editor.css' ), array(), DEVCO_VERSION );
+		wp_enqueue_style( 'devco-editor', devco_asset( 'css/editor.css' ), array(), devco_asset_ver( 'css/editor.css' ) );
 	}
 
 	/**

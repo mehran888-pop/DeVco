@@ -14,22 +14,22 @@ function devco_enqueue_assets() {
 	$ver = DEVCO_VERSION;
 
 	// Base stylesheet.
-	wp_enqueue_style( 'devco-main', devco_asset( 'css/main.css' ), array(), $ver );
-	wp_enqueue_style( 'devco-auth', devco_asset( 'css/auth.css' ), array( 'devco-main' ), $ver );
-	wp_enqueue_style( 'devco-floating', devco_asset( 'css/floating.css' ), array( 'devco-main' ), $ver );
-	wp_enqueue_style( 'devco-widgets', devco_asset( 'css/widgets.css' ), array( 'devco-main' ), $ver );
+	wp_enqueue_style( 'devco-main', devco_asset( 'css/main.css' ), array(), devco_asset_ver( 'css/main.css' ) );
+	wp_enqueue_style( 'devco-auth', devco_asset( 'css/auth.css' ), array( 'devco-main' ), devco_asset_ver( 'css/auth.css' ) );
+	wp_enqueue_style( 'devco-floating', devco_asset( 'css/floating.css' ), array( 'devco-main' ), devco_asset_ver( 'css/floating.css' ) );
+	wp_enqueue_style( 'devco-widgets', devco_asset( 'css/widgets.css' ), array( 'devco-main' ), devco_asset_ver( 'css/widgets.css' ) );
 
 	if ( devco_opt_bool( 'fitting.enabled', true ) ) {
-		wp_enqueue_style( 'devco-fitting', devco_asset( 'css/fitting.css' ), array( 'devco-main' ), $ver );
+		wp_enqueue_style( 'devco-fitting', devco_asset( 'css/fitting.css' ), array( 'devco-main' ), devco_asset_ver( 'css/fitting.css' ) );
 	}
 
 	if ( is_page_template( array( 'templates/dashboard.php', 'templates/tailoring.php', 'templates/track.php' ) ) ) {
-		wp_enqueue_style( 'devco-dashboard', devco_asset( 'css/dashboard.css' ), array( 'devco-main' ), $ver );
-		wp_enqueue_style( 'devco-tailoring', devco_asset( 'css/tailoring.css' ), array( 'devco-main' ), $ver );
+		wp_enqueue_style( 'devco-dashboard', devco_asset( 'css/dashboard.css' ), array( 'devco-main' ), devco_asset_ver( 'css/dashboard.css' ) );
+		wp_enqueue_style( 'devco-tailoring', devco_asset( 'css/tailoring.css' ), array( 'devco-main' ), devco_asset_ver( 'css/tailoring.css' ) );
 	}
 
 	if ( devco_is_woo() ) {
-		wp_enqueue_style( 'devco-woo', devco_asset( 'css/woo.css' ), array( 'devco-main' ), $ver );
+		wp_enqueue_style( 'devco-woo', devco_asset( 'css/woo.css' ), array( 'devco-main' ), devco_asset_ver( 'css/woo.css' ) );
 	}
 
 	// Dynamic CSS variables + option driven styles.
@@ -40,12 +40,12 @@ function devco_enqueue_assets() {
 	}
 
 	// Core script.
-	wp_register_script( 'devco-main', devco_asset( 'js/main.js' ), array( 'jquery' ), $ver, true );
-	wp_register_script( 'devco-floating', devco_asset( 'js/floating.js' ), array( 'devco-main' ), $ver, true );
-	wp_register_script( 'devco-fitting', devco_asset( 'js/fitting.js' ), array( 'devco-main' ), $ver, true );
-	wp_register_script( 'devco-auth', devco_asset( 'js/auth.js' ), array( 'devco-main' ), $ver, true );
-	wp_register_script( 'devco-dashboard', devco_asset( 'js/dashboard.js' ), array( 'devco-main' ), $ver, true );
-	wp_register_script( 'devco-tailoring', devco_asset( 'js/tailoring.js' ), array( 'devco-main' ), $ver, true );
+	wp_register_script( 'devco-main', devco_asset( 'js/main.js' ), array( 'jquery' ), devco_asset_ver( 'js/main.js' ), true );
+	wp_register_script( 'devco-floating', devco_asset( 'js/floating.js' ), array( 'devco-main' ), devco_asset_ver( 'js/floating.js' ), true );
+	wp_register_script( 'devco-fitting', devco_asset( 'js/fitting.js' ), array( 'devco-main' ), devco_asset_ver( 'js/fitting.js' ), true );
+	wp_register_script( 'devco-auth', devco_asset( 'js/auth.js' ), array( 'devco-main' ), devco_asset_ver( 'js/auth.js' ), true );
+	wp_register_script( 'devco-dashboard', devco_asset( 'js/dashboard.js' ), array( 'devco-main' ), devco_asset_ver( 'js/dashboard.js' ), true );
+	wp_register_script( 'devco-tailoring', devco_asset( 'js/tailoring.js' ), array( 'devco-main' ), devco_asset_ver( 'js/tailoring.js' ), true );
 
 	// Localize before enqueue so the data is printed with the main script.
 	wp_localize_script( 'devco-main', 'DeVcoData', devco_js_data() );

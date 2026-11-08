@@ -1163,9 +1163,102 @@
 	}
 
 	/* ------------------------------------------------------------------
+	 * Mobile-only chrome guard (never render on desktop)
+	 * ------------------------------------------------------------------ */
+	function initMobileChromeGuard() {
+		var mq = window.matchMedia('(min-width: 992px)');
+		var nodes = [];
+		var applied = null;
+
+		function collect() {
+			nodes = Devco.selectAll('[data-mobile-header], [data-bottom-nav], [data-drawer], [data-mobile-search]');
+		}
+
+		function apply(force) {
+			if (!nodes.length) {
+				collect();
+			}
+
+			var desktop = mq.matches;
+
+			if (!force && applied === desktop) {
+				return;
+			}
+
+			applied = desktop;
+
+			nodes.forEach(function (node) {
+				if (!node) {
+					return;
+				}
+
+				if (desktop) {
+					node.style.setProperty('display', 'none', 'important');
+
+					if (node.classList.contains('is-open')) {
+						node.classList.remove('is-open');
+						node.setAttribute('aria-hidden', 'true');
+					}
+
+					node.classList.remove('is-visible');
+					node.setAttribute('aria-hidden', 'true');
+				} else {
+					node.style.removeProperty('display');
+					node.classList.remove('is-hidden');
+				}
+			});
+
+			if (desktop) {
+				document.body.classList.remove('devco-locked');
+				document.documentElement.classList.remove('devco-locked');
+			}
+		}
+
+		apply(true);
+
+		if (mq.addEventListener) {
+			mq.addEventListener('change', function () {
+				apply(true);
+			});
+		} else if (mq.addListener) {
+			mq.addListener(function () {
+				apply(true);
+			});
+		}
+
+		var onResize = Devco.debounce(function () {
+			apply(true);
+		}, 150);
+
+		window.addEventListener('resize', onResize);
+		window.addEventListener('orientationchange', onResize);
+		document.addEventListener('devco:refresh', function () {
+			collect();
+			apply(true);
+		});
+
+		// Re-assert on scroll in case another script reveals mobile chrome.
+		window.addEventListener('scroll', function () {
+			if (!mq.matches) {
+				return;
+			}
+
+			for (var i = 0; i < nodes.length; i++) {
+				if (nodes[i] && nodes[i].style.display !== 'none') {
+					apply(true);
+					return;
+				}
+			}
+		}, { passive: true });
+
+		window.devcoMobileChromeGuard = apply;
+	}
+
+	/* ------------------------------------------------------------------
 	 * Boot
 	 * ------------------------------------------------------------------ */
 	function boot() {
+		initMobileChromeGuard();
 		initPreloader();
 		initHeader();
 		initMenus();
