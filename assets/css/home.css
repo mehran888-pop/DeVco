@@ -952,7 +952,12 @@
 	flex-basis: 100%;
 	font-size: .72rem;
 	color: rgba(245, 242, 236, .7);
+	min-height: 0;
 }
+
+.devco-home__cta-note:empty { display: none; }
+.devco-home__cta-note.is-success { color: #6ee7b7; font-weight: 700; }
+.devco-home__cta-note.is-error { color: #fca5a5; font-weight: 700; }
 
 /* ==================================================================
  * 10. Blog teaser

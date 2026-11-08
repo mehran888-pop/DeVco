@@ -622,7 +622,7 @@ function devco_home_section_cta() {
 						<?php devco_icon_e( 'mail', array( 'size' => 17 ) ); ?>
 						عضویت
 					</button>
-					<span class="devco-home__cta-note" role="status"></span>
+					<span class="devco-home__cta-note" data-newsletter-message role="status"></span>
 				</form>
 			</div>
 		</div>
