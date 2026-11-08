@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DEVCO_VERSION', '1.1.0' );
+define( 'DEVCO_VERSION', '1.1.1' );
 define( 'DEVCO_DIR', get_template_directory() );
 define( 'DEVCO_URI', get_template_directory_uri() );
 define( 'DEVCO_OPTION', 'devco_options' );

@@ -56,12 +56,50 @@ button, input, select, textarea {
 	color: inherit;
 }
 
-button { cursor: pointer; background: none; border: 0; padding: 0; }
+/*
+ * Button normalisation.
+ * Zero specificity on purpose: every component rule (`.devco-btn`,
+ * `.devco-icon-btn`, WooCommerce `.button`, wizard buttons, …) wins over it,
+ * while bare buttons / browser defaults are neutralised so nothing renders
+ * with the "deformed" UA styling (double borders, off-centre labels,
+ * squashed glyphs, iOS rounded looks).
+ */
+:where(button, input[type="submit"], input[type="button"], input[type="reset"]) {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: .45em;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 10px;
+	background: none;
+	color: inherit;
+	font: inherit;
+	font-weight: 600;
+	line-height: 1.5;
+	letter-spacing: normal;
+	text-align: center;
+	text-decoration: none;
+	text-transform: none;
+	vertical-align: middle;
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
 
+:where(button, input[type="submit"], input[type="button"], input[type="reset"]) > :where(svg, img) {
+	flex: 0 0 auto;
+	display: block;
+}
+
+/* Keep the focus ring on the element's own radius — never reshape it. */
 :focus-visible {
 	outline: 2px solid var(--devco-accent, #c8a96a);
 	outline-offset: 3px;
-	border-radius: 4px;
 }
 
 ::selection {
@@ -2445,13 +2483,127 @@ textarea { -webkit-tap-highlight-color: transparent; }
 .devco-site :where(a, button, [role="button"], summary):focus-visible {
 	outline: 2px solid var(--devco-accent, #c8a96a);
 	outline-offset: 3px;
-	border-radius: 8px;
 }
 
+/* ------------------------------------------------------------------
+ * 18. Button system — consistent, never deformed
+ * ------------------------------------------------------------------ */
 .devco-btn {
-	border-radius: 12px;
-	letter-spacing: -.1px;
+	border-radius: var(--devco-btn-radius, var(--devco-radius-sm, 12px));
+	letter-spacing: normal;
+	line-height: 1.6;
+	min-height: 44px;
+	padding: 10px 22px;
+	gap: 8px;
+	flex: 0 0 auto;
+	max-width: 100%;
 	will-change: transform;
+}
+
+.devco-btn > svg,
+.devco-btn > .devco-icon,
+.devco-btn > picture,
+.devco-btn > img {
+	flex: 0 0 auto;
+	max-width: none;
+}
+
+.devco-btn > svg,
+.devco-btn > .devco-icon {
+	width: 1.15em;
+	height: 1.15em;
+}
+
+/* Modifiers keep their own vertical rhythm (no min-height fights). */
+.devco-btn--sm {
+	min-height: 36px;
+	padding: 7px 15px;
+	line-height: 1.5;
+}
+
+.devco-btn--xs {
+	min-height: 30px;
+	padding: 5px 11px;
+	line-height: 1.4;
+	border-radius: 10px;
+}
+
+.devco-btn--lg {
+	min-height: 54px;
+	padding: 14px 30px;
+	line-height: 1.65;
+	font-size: 1rem;
+}
+
+.devco-btn--block { flex: 0 0 auto; }
+
+/* Icon-only controls stay perfectly square with a centred glyph. */
+.devco-icon-btn {
+	flex: 0 0 auto;
+	line-height: 0;
+	padding: 0;
+}
+
+.devco-icon-btn > svg,
+.devco-icon-btn > .devco-icon {
+	width: 20px;
+	height: 20px;
+	max-width: none;
+}
+
+/* Anchor-based buttons must not inherit link underlines or shrink. */
+a.devco-btn,
+a.devco-login-btn,
+a.devco-cart-btn { text-decoration: none; flex: 0 0 auto; }
+
+/* Kill the platform button skins (iOS/Mac gradients & inner shadows). */
+.devco-btn,
+.devco-icon-btn,
+.devco-login-btn,
+.devco-cart-btn,
+.devco-card-action,
+.devco-qty-btn,
+.devco-app__btn,
+.devco-wizard__btn,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce button.button.alt {
+	-webkit-appearance: none;
+	appearance: none;
+	line-height: 1.55;
+	text-transform: none;
+}
+
+/* Editor / core block buttons follow the same geometry. */
+.wp-block-button__link,
+.wp-element-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 10px 22px;
+	border: 1.5px solid transparent;
+	border-radius: var(--devco-btn-radius, var(--devco-radius-sm, 12px));
+	background: var(--devco-primary, #111827);
+	color: #fff;
+	font-weight: 600;
+	line-height: 1.6;
+	text-decoration: none;
+	transition: background .2s, color .2s, transform .2s;
+}
+
+.wp-block-button__link:hover,
+.wp-element-button:hover {
+	background: var(--devco-accent, #c8a96a);
+	color: #14110c;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background: transparent;
+	border-color: var(--devco-primary, #111827);
+	color: var(--devco-primary, #111827);
 }
 
 .devco-btn:active { transform: translateY(0) scale(.99); }

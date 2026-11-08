@@ -826,3 +826,135 @@ body.devco-locked { overflow: hidden; }
 @media (max-width: 991px) {
 	.devco-fc__ship { display: none; }
 }
+
+/* ------------------------------------------------------------------
+ * 9. Floating cart — configurable size & colour, icon always contained
+ *
+ *   --devco-fc-size : diameter of the round trigger (also scales the
+ *                     icon chip of the card/dock styles)
+ *   --devco-fc-bg   : background colour of the trigger / icon chip
+ *   --devco-fc-icon : glyph + label colour on top of that background
+ *
+ * The vars are printed inline from the theme options; the fallbacks below
+ * reproduce the previous appearance so existing sites look unchanged.
+ * ------------------------------------------------------------------ */
+.devco-floating-cart {
+	--devco-fc-ring: 0 22px 44px -24px rgba(15, 23, 42, .6), 0 0 0 2px rgba(200, 169, 106, .35);
+}
+
+/* ---------- circle + bubble: one perfect circle ---------- */
+.devco-floating-cart--circle .devco-fc__inner,
+.devco-floating-cart--bubble .devco-fc__inner {
+	display: grid;
+	place-items: center;
+	gap: 0;
+	width: var(--devco-fc-size, 58px);
+	height: var(--devco-fc-size, 58px);
+	min-width: 0;
+	max-width: none;
+	padding: 0;
+	line-height: 0;
+	border-radius: 50%;
+	box-sizing: border-box;
+	overflow: visible;
+}
+
+.devco-floating-cart--bubble .devco-fc__inner {
+	background: var(--devco-fc-bg, var(--devco-primary, #111827));
+	color: var(--devco-fc-icon, #fff);
+}
+
+.devco-floating-cart--circle .devco-fc__inner {
+	background: var(--devco-fc-bg, #fff);
+	color: var(--devco-fc-icon, var(--devco-primary, #111827));
+}
+
+.devco-floating-cart--circle .devco-fc__icon,
+.devco-floating-cart--bubble .devco-fc__icon {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: inherit;
+	line-height: 0;
+	overflow: visible;
+}
+
+/* The glyph is sized from the trigger, so it can never spill out. */
+.devco-floating-cart--circle .devco-fc__icon svg,
+.devco-floating-cart--bubble .devco-fc__icon svg {
+	width: calc(var(--devco-fc-size, 58px) * .38);
+	height: calc(var(--devco-fc-size, 58px) * .38);
+	max-width: none;
+	display: block;
+}
+
+/* Count badge sits *inside* the circle instead of hanging off its edge. */
+.devco-floating-cart--circle .devco-fc__count,
+.devco-floating-cart--bubble .devco-fc__count {
+	top: 0;
+	inset-inline-end: 0;
+	transform: none;
+	min-width: 17px;
+	height: 17px;
+	padding-inline: 4px;
+	font-size: .58rem;
+	border-width: 1.5px;
+}
+
+/* ---------- card + dock: the icon chip follows size / colour ---------- */
+.devco-floating-cart--card .devco-fc__inner,
+.devco-floating-cart--dock .devco-fc__inner {
+	overflow: visible;
+}
+
+.devco-floating-cart--card .devco-fc__inner::before,
+.devco-floating-cart--dock .devco-fc__inner::before {
+	border-radius: 18px 18px 0 0;
+}
+
+.devco-floating-cart--card .devco-fc__icon,
+.devco-floating-cart--dock .devco-fc__icon {
+	width: clamp(36px, calc(var(--devco-fc-size, 62px) * .68), 54px);
+	height: clamp(36px, calc(var(--devco-fc-size, 62px) * .68), 54px);
+	background: var(--devco-fc-bg, linear-gradient(150deg, rgba(200, 169, 106, .34), rgba(200, 169, 106, .08)));
+	color: var(--devco-fc-icon, var(--devco-accent-dark, #a8894c));
+}
+
+.devco-floating-cart--card .devco-fc__inner:hover .devco-fc__icon,
+.devco-floating-cart--dock .devco-fc__inner:hover .devco-fc__icon {
+	background: var(--devco-fc-bg, var(--devco-primary, #111827));
+	color: var(--devco-fc-icon, #fff);
+}
+
+.devco-floating-cart--card .devco-fc__icon svg,
+.devco-floating-cart--dock .devco-fc__icon svg {
+	width: 21px;
+	height: 21px;
+	max-width: none;
+}
+
+/* Card/dock badge is clipped by the panel before; keep it inside the chip. */
+.devco-floating-cart--card .devco-fc__count,
+.devco-floating-cart--dock .devco-fc__count {
+	top: -5px;
+	inset-inline-end: -5px;
+}
+
+/* Slightly tighter ring on phones so a large trigger never touches the edge. */
+@media (max-width: 575px) {
+	.devco-fc {
+		inset-inline-end: 14px;
+		bottom: 16px;
+	}
+
+	.devco-floating-cart--circle .devco-fc__inner,
+	.devco-floating-cart--bubble .devco-fc__inner {
+		width: min(var(--devco-fc-size, 58px), 68px);
+		height: min(var(--devco-fc-size, 58px), 68px);
+	}
+}

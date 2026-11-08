@@ -148,6 +148,10 @@ function devco_dynamic_css() {
 	$fit_accent = devco_color( devco_opt( 'fitting.accent' ), $accent );
 	$fit_bg     = devco_color( devco_opt( 'fitting.box_bg' ), '#0f172a' );
 	$fab_color  = devco_color( devco_opt( 'floating.actions_color' ), $accent );
+	$fc_size    = (int) devco_opt( 'floating.cart_size', 58 );
+	$fc_size    = ( $fc_size >= 40 && $fc_size <= 120 ) ? $fc_size : 58;
+	$fc_bg      = devco_color( devco_opt( 'floating.cart_color' ) );
+	$fc_icon    = devco_color( devco_opt( 'floating.cart_icon_color' ) );
 
 	$css = ':root{';
 
@@ -177,7 +181,17 @@ function devco_dynamic_css() {
 		'--devco-fit-accent'   => $fit_accent,
 		'--devco-fit-bg'       => $fit_bg,
 		'--devco-fab'          => $fab_color,
+		'--devco-fc-size'      => $fc_size . 'px',
 	);
+
+	// Floating cart colour is optional: empty = each style keeps its own default.
+	if ( $fc_bg ) {
+		$vars['--devco-fc-bg'] = $fc_bg;
+	}
+
+	if ( $fc_icon ) {
+		$vars['--devco-fc-icon'] = $fc_icon;
+	}
 
 	foreach ( $vars as $name => $value ) {
 		$css .= $name . ':' . $value . ';';
