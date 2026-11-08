@@ -362,7 +362,7 @@ class DeVco_Options {
 			return;
 		}
 
-		$wide = in_array( $type, array( 'repeater', 'slot_matrix', 'textarea', 'code', 'media', 'sortable', 'checklist', 'measurements' ), true );
+		$wide = in_array( $type, array( 'repeater', 'slot_matrix', 'textarea', 'code', 'media', 'sortable', 'checklist', 'measurements', 'switch', 'checkbox', 'pages', 'measurements' ), true );
 
 		printf(
 			'<div class="devco-field devco-field--%1$s %2$s" data-field="%3$s">',
@@ -512,19 +512,12 @@ class DeVco_Options {
 				break;
 
 			case 'checkbox':
+			case 'switch':
 				printf(
-					'<label class="devco-switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="devco-switch-track"></span></label><span class="devco-field-desc">%3$s</span>',
+					'<label class="devco-switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="devco-switch-track"></span></label><span class="devco-field-title">%3$s</span>',
 					esc_attr( $name ),
 					checked( (bool) $value, true, false ),
 					esc_html( isset( $field['title'] ) ? $field['title'] : '' )
-				);
-				break;
-
-			case 'switch':
-				printf(
-					'<label class="devco-switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="devco-switch-track"></span></label>',
-					esc_attr( $name ),
-					checked( (bool) $value, true, false )
 				);
 				break;
 
@@ -571,15 +564,18 @@ class DeVco_Options {
 
 			case 'icon':
 				$icons = array_keys( devco_icon_paths() );
+				echo '<div class="devco-icon-field">';
 				printf( '<select id="devco-%1$s" name="%2$s" class="devco-select devco-icon-select">', esc_attr( sanitize_title( $id ) ), esc_attr( $name ) );
 				printf( '<option value="">— بدون آیکون —</option>' );
 				foreach ( $icons as $icon_name ) {
 					printf( '<option value="%1$s" %2$s>%1$s</option>', esc_attr( $icon_name ), selected( (string) $value, (string) $icon_name, false ) );
 				}
 				echo '</select>';
+				echo '<span class="devco-icon-preview">';
 				if ( $value && isset( devco_icon_paths()[ $value ] ) ) {
-					echo '<span class="devco-icon-preview">' . devco_icon( $value, array( 'size' => 22 ) ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo devco_icon( $value, array( 'size' => 22 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
+				echo '</span></div>';
 				break;
 
 			default:
