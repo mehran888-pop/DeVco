@@ -217,16 +217,18 @@ function devco_product_search_form() {
  * Header component: account / login button.
  */
 function devco_component_account() {
-	echo '<div class="devco-account">';
+	$logged = is_user_logged_in();
 
-	if ( is_user_logged_in() ) {
+	echo '<div class="devco-account ' . ( $logged ? 'devco-account--user' : 'devco-account--guest' ) . '">';
+
+	if ( $logged ) {
 		$user = wp_get_current_user();
 		$url  = devco_dashboard_url();
 
 		printf(
-			'<button type="button" class="devco-account__toggle devco-icon-btn" aria-expanded="false" aria-label="%1$s"><span class="devco-account__avatar">%2$s</span><span class="devco-account__name">%3$s</span>%4$s</button>',
+			'<button type="button" class="devco-account__toggle" aria-expanded="false" aria-label="%1$s"><span class="devco-account__avatar">%2$s<i class="devco-account__dot"></i></span><span class="devco-account__text"><small>حساب من</small><strong class="devco-account__name">%3$s</strong></span><span class="devco-account__chev">%4$s</span></button>',
 			esc_attr( 'حساب کاربری' ),
-			get_avatar( $user->ID, 28, '', '', array( 'class' => 'devco-avatar' ) ),
+			get_avatar( $user->ID, 32, '', '', array( 'class' => 'devco-avatar' ) ),
 			esc_html( devco_trim( $user->display_name, 2 ) ),
 			devco_icon( 'chevron-down', array( 'size' => 14 ) ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
@@ -264,7 +266,7 @@ function devco_component_account() {
 		$text  = devco_opt( 'auth.button_text', 'ورود | ثبت‌نام' );
 
 		printf(
-			'<button type="button" class="devco-login-btn devco-login-btn--%1$s js-devco-auth-open" data-auth-view="%2$s"><span class="devco-login-btn__icon">%3$s</span><span class="devco-login-btn__text">%4$s</span></button>',
+			'<button type="button" class="devco-login-btn devco-login-btn--%1$s js-devco-auth-open" data-auth-view="%2$s" aria-label="%4$s"><span class="devco-login-btn__icon">%3$s</span><span class="devco-login-btn__text">%4$s</span><span class="devco-login-btn__shine" aria-hidden="true"></span></button>',
 			esc_attr( $style ),
 			esc_attr( devco_opt( 'auth.default_method', 'otp' ) ),
 			devco_icon( 'user', array( 'size' => 19 ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -286,7 +288,8 @@ function devco_component_cart() {
 	$count = devco_cart_count();
 
 	printf(
-		'<button type="button" class="devco-cart-btn js-devco-cart-open" aria-label="سبد خرید" data-count="%1$d"><span class="devco-cart-btn__icon">%2$s<span class="devco-cart-btn__count" data-cart-count>%3$s</span></span><span class="devco-cart-btn__meta"><small>سبد خرید</small><strong data-cart-total>%4$s</strong></span></button>',
+		'<button type="button" class="devco-cart-btn devco-cart-btn--pill js-devco-cart-open" aria-label="%1$s" aria-live="polite" data-count="%2$d"><span class="devco-cart-btn__icon">%3$s<span class="devco-cart-btn__count" data-cart-count>%4$s</span></span><span class="devco-cart-btn__meta"><small>سبد خرید</small><strong data-cart-total>%5$s</strong></span></button>',
+		esc_attr( 'سبد خرید' ),
 		(int) $count,
 		devco_icon( 'bag', array( 'size' => 21 ) ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		esc_html( devco_num( $count ) ),

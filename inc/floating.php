@@ -147,6 +147,10 @@ class DeVco_Floating {
 			$classes[] = 'is-hidden';
 		}
 
+		if ( ! $count ) {
+			$classes[] = 'is-empty';
+		}
+
 		if ( devco_opt_bool( 'floating.cart_hide_mobile', true ) ) {
 			$classes[] = 'hide-mobile';
 		}
@@ -177,7 +181,11 @@ class DeVco_Floating {
 		echo '<span class="devco-fc__icon">' . devco_icon( 'bag', array( 'size' => 22 ) ) . '<span class="devco-fc__count" data-cart-count>' . esc_html( devco_num( $count ) ) . '</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( in_array( $style, array( 'card', 'dock' ), true ) ) {
-			echo '<span class="devco-fc__meta"><small>' . ( $count ? esc_html( devco_num( $count ) ) . ' کالا در سبد' : 'سبد خرید' ) . '</small><strong data-cart-total>' . wp_kses_post( $total ? $total : devco_price( 0 ) ) . '</strong></span>';
+			echo '<span class="devco-fc__meta"><small>' . ( $count ? esc_html( devco_num( $count ) ) . ' کالا در سبد' : 'سبد خرید' ) . '</small><strong data-cart-total>' . wp_kses_post( $total ? $total : devco_price( 0 ) ) . '</strong>';
+
+			echo self::shipping_progress(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+			echo '</span>';
 		}
 
 		if ( 'dock' === $style && devco_opt_bool( 'floating.cart_items_preview', true ) && devco_is_woo() && WC()->cart && ! WC()->cart->is_empty() ) {
@@ -199,6 +207,43 @@ class DeVco_Floating {
 		}
 
 		echo '<span class="devco-fc__arrow" aria-hidden="true">' . devco_icon( 'chevron-left', array( 'size' => 16 ) ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Free shipping progress bar for the floating cart.
+	 *
+	 * @return void
+	 */
+	public static function shipping_progress() {
+		$threshold = (float) devco_opt( 'floating.cart_threshold', 0 );
+
+		if ( $threshold <= 0 || ! devco_is_woo() || ! WC()->cart ) {
+			return;
+		}
+
+		$subtotal = (float) WC()->cart->get_subtotal();
+		$percent  = min( 100, max( 0, ( $subtotal / $threshold ) * 100 ) );
+		$remain   = max( 0, $threshold - $subtotal );
+
+		echo '<span class="devco-fc__ship">';
+		printf(
+			'<span class="devco-fc__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%1$d"><i style="width:%1$d%%"></i></span>',
+			(int) round( $percent )
+		);
+
+		if ( $remain > 0 ) {
+			printf(
+				'<span class="devco-fc__ship-note">%s</span>',
+				wp_kses_post( sprintf( '%s تا ارسال رایگان', devco_price( $remain ) ) )
+			);
+		} else {
+			printf(
+				'<span class="devco-fc__ship-note is-free">%s</span>',
+				esc_html( 'ارسال رایگان فعال شد 🎉' )
+			);
+		}
+
+		echo '</span>';
 	}
 
 	/**

@@ -40,6 +40,11 @@ require_once DEVCO_DIR . '/inc/class-devco-builder.php';
 require_once DEVCO_DIR . '/inc/template-tags.php';
 
 /**
+ * Creative front page sections (hero, demo products, editorial blocks).
+ */
+require_once DEVCO_DIR . '/inc/home.php';
+
+/**
  * Global floating UI (cart, contact, socials, login modal) and fitting room.
  */
 require_once DEVCO_DIR . '/inc/fitting.php';

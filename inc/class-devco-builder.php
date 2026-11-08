@@ -144,7 +144,14 @@ class DeVco_Builder {
 						<div class="devco-header__row-inner">
 							<div class="devco-header__slot devco-header__slot--right"><?php devco_site_logo( array( 'class' => 'devco-header__logo' ) ); ?></div>
 							<div class="devco-header__slot devco-header__slot--center"><?php devco_component_menu(); ?></div>
-							<div class="devco-header__slot devco-header__slot--left"><?php devco_component_search(); devco_component_account(); devco_component_cart(); ?></div>
+							<div class="devco-header__slot devco-header__slot--left">
+								<div class="devco-header__actions">
+									<?php devco_component_search(); ?>
+									<span class="devco-header__divider" aria-hidden="true"></span>
+									<?php devco_component_account(); ?>
+									<?php devco_component_cart(); ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

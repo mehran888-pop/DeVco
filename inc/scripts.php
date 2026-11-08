@@ -32,6 +32,11 @@ function devco_enqueue_assets() {
 		wp_enqueue_style( 'devco-woo', devco_asset( 'css/woo.css' ), array( 'devco-main' ), devco_asset_ver( 'css/woo.css' ) );
 	}
 
+	// Front page sections.
+	if ( is_front_page() || ( is_page() && is_page_template( 'templates/home.php' ) ) ) {
+		wp_enqueue_style( 'devco-home', devco_asset( 'css/home.css' ), array( 'devco-main' ), devco_asset_ver( 'css/home.css' ) );
+	}
+
 	// Dynamic CSS variables + option driven styles.
 	$dynamic = devco_dynamic_css();
 

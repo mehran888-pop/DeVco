@@ -1334,6 +1334,15 @@ return array(
 						'title'   => 'نمایش پیش‌نمایش آیتم‌ها در داک',
 						'default' => 1,
 					),
+					array(
+						'id'          => 'floating.cart_threshold',
+						'type'        => 'number',
+						'title'       => 'سقف ارسال رایگان',
+						'description' => 'مبلغی که با رسیدن جمع سبد به آن، نوار پیشرفت «ارسال رایگان» کامل می‌شود. صفر = غیرفعال.',
+						'min'         => 0,
+						'step'        => 100000,
+						'default'     => 0,
+					),
 				),
 			),
 			array(
