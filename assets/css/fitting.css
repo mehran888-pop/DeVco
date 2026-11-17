@@ -477,7 +477,63 @@
 .devco-fitting--inline .devco-fitting__backdrop { display: none; }
 
 /* ------------------------------------------------------------------
- * 9. Responsive
+ * 9. Mirror, guides, loading & focus states
+ * ------------------------------------------------------------------ */
+.devco-fitting__stage.is-mirrored .devco-fitting__video { transform: scaleX(-1); }
+
+/* Alignment guides shown while dragging the garment */
+.devco-fitting__guides {
+	position: absolute;
+	inset: 0;
+	z-index: 4;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity .18s ease;
+}
+
+.devco-fitting__stage.is-guiding .devco-fitting__guides { opacity: 1; }
+
+.devco-fit-guide { position: absolute; }
+.devco-fit-guide--v { top: 8%; bottom: 8%; left: 50%; width: 0; border-inline-start: 1px dashed rgba(200, 169, 106, .65); }
+.devco-fit-guide--h { left: 10%; right: 10%; top: 24%; height: 0; border-top: 1px dashed rgba(200, 169, 106, .65); }
+
+/* Garment loading spinner */
+.devco-fitting__cloth.is-loading img { opacity: .22; }
+
+.devco-fitting__cloth.is-loading::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	border-radius: 50%;
+	border: 3px solid rgba(255, 255, 255, .18);
+	border-top-color: var(--devco-fit-accent, #c8a96a);
+	animation: devco-fit-spin .8s linear infinite;
+}
+
+@keyframes devco-fit-spin { to { transform: rotate(360deg); } }
+
+.devco-fit-thumb.is-active:focus-visible,
+.devco-fit-tool:focus-visible,
+.devco-fitting__close:focus-visible {
+	outline: 2px solid var(--devco-fit-accent, #c8a96a);
+	outline-offset: 2px;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.devco-fit-body { animation: none; }
+	.devco-fitting__panel,
+	.devco-fitting__cloth,
+	.devco-fitting__backdrop,
+	.devco-fitting__guides { transition: none !important; }
+}
+
+/* ------------------------------------------------------------------
+ * 10. Responsive
  * ------------------------------------------------------------------ */
 @media (max-width: 991px) {
 	.devco-fit-trigger--float { bottom: calc(var(--devco-mobile-h, 64px) + 150px); inset-inline-end: 14px; }

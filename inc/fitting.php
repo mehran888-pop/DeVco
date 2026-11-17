@@ -136,14 +136,14 @@ function devco_fitting_room( $args = array() ) {
 	$webcam    = devco_opt_bool( 'fitting.webcam', true );
 	$upload    = devco_opt_bool( 'fitting.upload', true );
 	?>
-	<div class="devco-fitting" id="<?php echo esc_attr( $args['id'] ); ?>" data-fitting data-side="<?php echo esc_attr( $args['side'] ); ?>" data-opacity="<?php echo esc_attr( $args['opacity'] ); ?>" aria-hidden="true">
+	<div class="devco-fitting" id="<?php echo esc_attr( $args['id'] ); ?>" data-fitting data-side="<?php echo esc_attr( $args['side'] ); ?>" data-opacity="<?php echo esc_attr( $args['opacity'] ); ?>" data-product-id="<?php echo esc_attr( (int) $args['product_id'] ); ?>" aria-hidden="true">
 		<div class="devco-fitting__backdrop" data-fit-close></div>
 
-		<aside class="devco-fitting__panel" role="dialog" aria-modal="true" aria-label="اتاق پرو مجازی">
+		<aside class="devco-fitting__panel" role="dialog" aria-modal="true" aria-labelledby="<?php echo esc_attr( $args['id'] ); ?>-title">
 			<header class="devco-fitting__head">
 				<div>
 					<span class="devco-fitting__eyebrow"><?php devco_icon_e( 'sparkle', array( 'size' => 15 ) ); ?> پرو مجازی</span>
-					<h3 class="devco-fitting__title">لباس را روی خودتان ببینید</h3>
+					<h3 class="devco-fitting__title" id="<?php echo esc_attr( $args['id'] ); ?>-title">لباس را روی خودتان ببینید</h3>
 				</div>
 				<button type="button" class="devco-fitting__close" data-fit-close aria-label="بستن"><?php devco_icon_e( 'close', array( 'size' => 20 ) ); ?></button>
 			</header>
@@ -170,8 +170,13 @@ function devco_fitting_room( $args = array() ) {
 					<?php endif; ?>
 
 					<div class="devco-fitting__cloth" data-fit-cloth hidden>
-						<img data-fit-cloth-img src="" alt="لباس انتخاب‌شده" draggable="false" />
+						<img data-fit-cloth-img src="" alt="لباس انتخاب‌شده" draggable="false" decoding="async" />
 						<span class="devco-fitting__handle" aria-hidden="true"><?php devco_icon_e( 'drag', array( 'size' => 16 ) ); ?></span>
+					</div>
+
+					<div class="devco-fitting__guides" data-fit-guides aria-hidden="true">
+						<span class="devco-fit-guide devco-fit-guide--v"></span>
+						<span class="devco-fit-guide devco-fit-guide--h"></span>
 					</div>
 
 					<div class="devco-fitting__empty" data-fit-empty>
@@ -205,7 +210,7 @@ function devco_fitting_room( $args = array() ) {
 				</label>
 				<label class="devco-fit-range">
 					<span>اندازه</span>
-					<input type="range" min="50" max="180" value="100" data-fit-range="scale" />
+					<input type="range" min="40" max="220" value="100" data-fit-range="scale" />
 				</label>
 				<label class="devco-fit-range">
 					<span>چرخش</span>
@@ -224,7 +229,7 @@ function devco_fitting_room( $args = array() ) {
 								data-image="<?php echo esc_url( $item['image'] ); ?>"
 								data-title="<?php echo esc_attr( $item['title'] ); ?>"
 								data-product="<?php echo esc_attr( $item['product'] ); ?>">
-								<img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy" />
+								<img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy" decoding="async" />
 								<span><?php echo esc_html( $item['title'] ); ?></span>
 							</button>
 						<?php endforeach; ?>
